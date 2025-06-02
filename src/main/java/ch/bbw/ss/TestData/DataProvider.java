@@ -1,6 +1,7 @@
 package ch.bbw.ss.TestData;
 
 import ch.bbw.ss.Model.Person;
+import ch.bbw.ss.adapter.GsonAdapter;
 import com.google.gson.Gson;
 import org.instancio.Instancio;
 
@@ -30,11 +31,12 @@ public class DataProvider {
                 System.out.println(e.getMessage());
             }
 
-            Gson gson = new Gson();
+            var gson = GsonAdapter.createGson();
             return List.of(gson.fromJson(dataString, Person[].class));
         }
         else {
-            System.out.println("Data file not found...");
+            System.out.println("Something went wrong, file does not exist...");
+            return null;
         }
     }
 
@@ -63,7 +65,7 @@ public class DataProvider {
                 data.add(person);
             }
 
-            Gson gson = new Gson();
+            Gson gson = GsonAdapter.createGson();
             String jsonData = gson.toJson(data);
 
             writer = new FileWriter("data.json");
