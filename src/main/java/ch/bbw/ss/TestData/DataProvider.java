@@ -14,10 +14,12 @@ import java.util.List;
 import java.util.Scanner;
 
 public class DataProvider {
+    private static final String filePath = ".\\src\\main\\java\\ch\\bbw\\ss\\TestData\\data.json";
+
     public static List<Person> GetData(){
         EnsureData();
 
-        var dataFile = new File("data.json");
+        var dataFile = new File(filePath);
         var dataString = "";
 
         if(dataFile.exists()){
@@ -32,7 +34,8 @@ public class DataProvider {
             }
 
             var gson = GsonAdapter.createGson();
-            return List.of(gson.fromJson(dataString, Person[].class));
+            var idk = gson.fromJson(dataString, Person[].class);
+            return List.of(idk);
         }
         else {
             System.out.println("Something went wrong, file does not exist...");
@@ -44,12 +47,11 @@ public class DataProvider {
         File myObj;
 
         try {
-            myObj = new File("data.json");
+            myObj = new File(filePath);
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
             } else {
                 System.out.println("File already exists.");
-                return;
             }
         } catch (IOException e) {
             System.out.println("An error occurred.");
