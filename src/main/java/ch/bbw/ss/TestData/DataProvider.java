@@ -1,0 +1,85 @@
+package ch.bbw.ss.TestData;
+
+import ch.bbw.ss.Model.Person;
+import com.google.gson.Gson;
+import org.instancio.Instancio;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class DataProvider {
+    public static List<Person> GetData(){
+        EnsureData();
+
+        var dataFile = new File("data.json");
+        var dataString = "";
+
+        if(dataFile.exists()){
+
+            try{
+                Scanner myReader = new Scanner(dataFile);
+                while (myReader.hasNextLine()) {
+                    dataString += myReader.nextLine();
+                }
+            } catch (FileNotFoundException e) {
+                System.out.println(e.getMessage());
+            }
+
+            Gson gson = new Gson();
+            return List.of(gson.fromJson(dataString, Person[].class));
+        }
+        else {
+            System.out.println("Data file not found...");
+        }
+    }
+
+    private static void EnsureData(){
+        File myObj;
+
+        try {
+            myObj = new File("data.json");
+            if (myObj.createNewFile()) {
+                System.out.println("File created: " + myObj.getName());
+            } else {
+                System.out.println("File already exists.");
+                return;
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            System.out.println(e.getMessage());
+            return;
+        }
+
+        FileWriter writer = null;
+        try{
+            var data = new ArrayList<>();
+            for (int i = 0; i < 10; i++) {
+                var person = Instancio.create(Person.class);
+                data.add(person);
+            }
+
+            Gson gson = new Gson();
+            String jsonData = gson.toJson(data);
+
+            writer = new FileWriter("data.json");
+            writer.write(jsonData);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            try{
+                if(writer != null){
+                    writer.close();
+                }
+            }
+            catch (IOException e){
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+}
