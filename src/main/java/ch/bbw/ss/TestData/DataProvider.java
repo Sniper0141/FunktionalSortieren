@@ -44,12 +44,12 @@ public class DataProvider {
     }
 
     private static void EnsureData(){
-        File myObj;
+        File file;
 
         try {
-            myObj = new File(filePath);
-            if (myObj.createNewFile()) {
-                System.out.println("File created: " + myObj.getName());
+            file = new File(filePath);
+            if (file.createNewFile()) {
+                System.out.println("File created: " + file.getName());
             } else {
                 System.out.println("File already exists.");
             }
@@ -70,7 +70,8 @@ public class DataProvider {
             Gson gson = GsonAdapter.createGson();
             String jsonData = gson.toJson(data);
 
-            writer = new FileWriter("data.json");
+
+            writer = new FileWriter(file);
             writer.write(jsonData);
         } catch (IOException e) {
             throw new RuntimeException(e);
