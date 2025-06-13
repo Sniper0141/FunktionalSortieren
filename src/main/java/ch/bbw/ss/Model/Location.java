@@ -9,7 +9,7 @@ public record Location (String country, String city) implements Comparable<Locat
         if(countryCompared == 0){
             return CharSequence.compare(city, city);
         }
-        
+
         return countryCompared;
     }
 }
