@@ -3,8 +3,6 @@ package ch.bbw.ss.Model;
 import java.util.Comparator;
 
 public record Contact (String phone, String email) {
-
-
     static Comparator<Contact> byPhone = new Comparator<Contact>() {
         @Override
         public int compare(Contact c1, Contact c2) {
