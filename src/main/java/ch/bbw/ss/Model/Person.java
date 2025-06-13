@@ -6,6 +6,7 @@ import java.util.List;
 
 public record Person(String name, Contact contact, Location location, Date birthDate, List<Contact> friends)
         implements Comparable {
+    
     @Override
     public int compareTo(Object o) {
         var p = (Person)o;
