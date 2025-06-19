@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-public record Person(String name, Contact contact, Location location, Date birthDate, List<Contact> friends)
+public record Person(String name, Contact contact, Location location, Date birthDate, List<Person> friends)
         implements Comparable {
 
     @Override
